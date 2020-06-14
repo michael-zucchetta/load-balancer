@@ -45,8 +45,10 @@ public class LoadBalancerServer implements Runnable {
                 // Step 8 – Cluster Capacity Limit
                 if (currentCallsSize.get() > this.strategy.size()) {
                     System.out.println("Too many requests");
+                    loadBalancerSocket.close();
                 } else if (this.strategy.size() == 0 ) {
                     System.out.println("No instances currently available");
+                    loadBalancerSocket.close();
                 } else {
 
                     currentCallsSize.incrementAndGet();
@@ -56,6 +58,12 @@ public class LoadBalancerServer implements Runnable {
                     CompletableFuture.runAsync(worker).thenRun(() -> {
                         int activeCalls = currentCallsSize.decrementAndGet();
                         System.out.println("Released " + activeCalls);
+                    }).thenRun(() -> {
+                        try {
+                            loadBalancerSocket.close();
+                        } catch (IOException e) {
+                            System.err.println("Socket already closed");
+                        }
                     });
                 }
 

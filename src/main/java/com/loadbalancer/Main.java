@@ -69,7 +69,7 @@ public class Main {
 
             }
 
-            if (args.length >= 10 && args[8].equals("--service_delay")) {
+            if (args.length >= 10 && args[8].equals("--service_simulate_delay")) {
                 int threadDelay = checkIfValidInteger(args[9]);
                 Config.THREAD_DELAY = threadDelay;
             }

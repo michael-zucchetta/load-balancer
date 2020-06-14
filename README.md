@@ -9,7 +9,7 @@ A single instance has a probability to not be available and it will be put
 
 ## Setup
 
-Install [gradle](https://gradle.org/), and [Java 13](https://www.oracle.com/java/technologies/javase-jdk13-downloads.html) (or Java 14) and do:
+Install [gradle](https://gradle.org/), and at least [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html) and do:
 
 - `gradle run`
 
@@ -33,5 +33,5 @@ It is possible to run tests with:
 
 `gradle run --args="--algo Random"`
 
-- Spin up a new Load Balancer instance with a Round Robin balancing algorith, 5 instances, a healthcheck being run every 5 seconds and a healthcheck failure chance of 99%.
-`gradle run --args="--algo RoundRobin --instances 5 --healthcheck_seconds 5 --healthcheck_failure_chance 0.99"`
+- Spin up a new Load Balancer instance with a Round Robin balancing algorith, 5 instances, a healthcheck being run every 5 seconds and a healthcheck failure chance of 99% and a delay of 5 ms.
+`gradle run --args="--algo RoundRobin --instances 5 --healthcheck_seconds 5 --healthcheck_failure_chance 0.99 --service_simulate_delay 5"`
