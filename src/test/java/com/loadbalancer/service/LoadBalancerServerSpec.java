@@ -71,7 +71,7 @@ public class LoadBalancerServerSpec {
     @Test
     public void callWithNoService() throws IOException {
         var emptyServer = new LoadBalancerServer(LoadBalancingAlgorithm.RoundRobin, new ArrayList<>(), 0, 5, port + 1);
-
+        new Thread(emptyServer).start();
         Socket call = new Socket("localhost", port + 1);
 
         byte buffer[] = call.getInputStream().readAllBytes();
