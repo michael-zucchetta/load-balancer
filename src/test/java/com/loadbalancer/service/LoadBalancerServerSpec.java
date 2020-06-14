@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -65,5 +66,16 @@ public class LoadBalancerServerSpec {
 
         }
         assertEquals(server.currentCallsSize.get(), server.strategy.size() + 1);
+    }
+
+    @Test
+    public void callWithNoService() throws IOException {
+        var emptyServer = new LoadBalancerServer(LoadBalancingAlgorithm.RoundRobin, new ArrayList<>(), 0, 5, port + 1);
+
+        Socket call = new Socket("localhost", port + 1);
+
+        byte buffer[] = call.getInputStream().readAllBytes();
+
+        assertEquals(new String(buffer), "");
     }
 }
